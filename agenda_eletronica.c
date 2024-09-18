@@ -3,7 +3,7 @@
 #include <locale.h>
 #include <string.h>
 
-// Definindo tamanhos máximos para as variáveis
+// Definindo tamanhos mÃ¡ximos para as variÃ¡veis
 #define MAX_NOME 50
 #define MAX_TEL 15
 #define MAX_EMAIL 50
@@ -35,11 +35,11 @@ void limBuffer() {
     while ((c = getchar()) != EOF && c != '\n');
 }
 
-// Função para cadastrar um novo contato
+// FunÃ§Ã£o para cadastrar um novo contato
 void cadastrarContato(FILE *arquivo, int *total_contatos) {
     Contato contato;
 
-    // Coleta de dados do usuário
+    // Coleta de dados do usuÃ¡rio
     printf("Digite o nome completo: ");
     fgets(contato.nome, MAX_NOME, stdin);
     contato.nome[strcspn(contato.nome, "\n")] = '\0'; // Remove o newline
@@ -70,9 +70,9 @@ void cadastrarContato(FILE *arquivo, int *total_contatos) {
     contato.rua[strcspn(contato.rua, "\n")] = '\0';
     
     
-    printf("Digite o número da residência: ");
+    printf("Digite o nÃºmero da residÃªncia: ");
     scanf("%d", &contato.numero);
-    getchar(); // Limpar o newline após a leitura do número
+    getchar(); // Limpar o newline apÃ³s a leitura do nÃºmero
     
 
     printf("Digite o complemento (se houver): ");
@@ -95,30 +95,30 @@ void cadastrarContato(FILE *arquivo, int *total_contatos) {
     contato.estado[strcspn(contato.estado, "\n")] = '\0';
 
     limBuffer();
-    
-    printf("Escolha uma opção:\n ");
+     printf("\n");
+    printf("Estado civil:\n");
     printf("1. solteiro\n");
     printf("2. casado\n");
     printf("3. separado\n");
-    printf("4. viúvo\n");
+    printf("4. viÃºvo\n");
     fgets(contato.estado_civil, 10, stdin);
     contato.estado_civil[strcspn(contato.estado_civil, "\n")] = '\0';
     
-    // Grava o contato no arquivo binário
+    // Grava o contato no arquivo binÃ¡rio
     fseek(arquivo, 0, SEEK_END); // Move o ponteiro para o final do arquivo
     fwrite(&contato, sizeof(Contato), 1, arquivo);
     (*total_contatos)++;
 
 
-    printf("Dados cadrastrados com sucesso!!! :\n) ");
+    printf("\nDados cadrastrados com sucesso!!!\n");
 }
 
-// Função para exibir todos os contatos armazenados
+// FunÃ§Ã£o para exibir todos os contatos armazenados
 void exibirContatos(FILE *arquivo, int total_contatos) {
     Contato contato;
     int i;
 
-    fseek(arquivo, 0, SEEK_SET); // Move o ponteiro para o início do arquivo
+    fseek(arquivo, 0, SEEK_SET); // Move o ponteiro para o inÃ­cio do arquivo
     
     for (i = 0; i < total_contatos; i++) {
         fread(&contato, sizeof(Contato), 1, arquivo);
@@ -128,13 +128,13 @@ void exibirContatos(FILE *arquivo, int total_contatos) {
         printf("Telefone celular 1: %s\n", contato.telefone_celular1);
         printf("Telefone celular 2: %s\n", contato.telefone_celular2);
         printf("E-mail: %s\n", contato.email);
-        printf("Endereço: %s, %d, %s, %s, %s, %s\n",
+        printf("EndereÃ§o: %s, %d, %s, %s, %s, %s\n",
             contato.rua, contato.numero, contato.complemento, contato.bairro, contato.cidade, contato.estado);
         printf("Estado Civil: %s\n", contato.estado_civil);
     }
 }
 
-// Função principal
+// FunÃ§Ã£o principal
 int main() {
     FILE *arquivo;
     int opcao, total_contatos = 0;
@@ -147,23 +147,33 @@ int main() {
         return 1;
     }
     
-    // Conta o número de contatos existentes no arquivo
+    // Conta o nÃºmero de contatos existentes no arquivo
     fseek(arquivo, 0, SEEK_END); // Move o ponteiro para o final do arquivo
-    long tamanho_arquivo = ftell(arquivo); // Obtém a posição atual do ponteiro
+    long tamanho_arquivo = ftell(arquivo); // ObtÃ©m a posiÃ§Ã£o atual do ponteiro
     if (tamanho_arquivo > 0) {
         total_contatos = tamanho_arquivo / sizeof(Contato);
     }
     
-    // Menu de opções 
-    do {
+    // Menu de opÃ§Ãµes 
     	setlocale (LC_ALL, "Portuguese");
-        printf("\n******** Agenda Eletrônica ********\n");
-        printf("1. Cadastrar novo contato\n");
+    printf("  ___                       _         _____ _      _                   _           \n");
+    printf(" / _ \\                     | |       |  ___| |    | |                 (_)          \n");
+    printf("/ /_\\ \\ __ _  ___ _ __   __| | __ _  | |__ | | ___| |_ _ __ ___  _ __  _  ___ __ _ \n");
+    printf("|  _  |/ _` |/ _ \\ '_ \\ / _` |/ _` | |  __|| |/ _ \\ __| '__/ _ \\| '_ \\| |/ __/ _` |\n");
+    printf("| | | | (_| |  __/ | | | (_| | (_| | | |___| |  __/ |_| | | (_) | | | | | (_| (_| |\n");
+    printf("\\_| |_/\\__, |\\___|_| |_|\\__,_|\\__,_| \\____/|_|\\___|\\__|_|  \\___/|_| |_|_|\\___\\__,_|\n");
+    printf("        __/ |                                                                      \n");
+    printf("       |___/                                                                       \n");
+    system("color 0B");
+        printf("\n******************************************************************************\n");
+    do {
+    
+        printf("\n1.Cadastrar novo contato\n");
         printf("2. Exibir contatos cadastrados\n");
         printf("3. Sair\n");
-        printf("Escolha uma opção: ");
+        printf("Escolha uma opÃ§Ã£o: ");
         scanf("%d", &opcao);
-        getchar(); // Limpa o newline após a leitura da opção
+        getchar(); // Limpa o newline apÃ³s a leitura da opÃ§Ã£o
 
         switch (opcao) {
             case 1:
@@ -176,11 +186,11 @@ int main() {
                 printf("Saindo...\n");
                 break;
             default:
-                printf("Opção inválida! Tente novamente.\n"); 
+                printf("OpÃ§Ã£o invÃ¡lida! Tente novamente.\n"); 
         }
     } while (opcao != 3);
 
-    // Fecha o arquivo ao final da execução do programa
+    // Fecha o arquivo ao final da execuÃ§Ã£o do programa
     fclose(arquivo);
 
     return 0;
